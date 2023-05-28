@@ -14,12 +14,14 @@ const postAnswer = require("./routes/post_answer");
 
 const express = require("express")
 const cors = require("cors");
+const { searchAnswer } = require("./controllers/searchController");
 const app = express();
 
 app.use(express.json());
 app.use(cors({origin:true}))
 app.use('/api', doubtRoutes.routes);
-app.use("/api/doubt/answer",postAnswer.routes)  
+app.use("/api/doubt/answer",postAnswer.routes)
+app.use("/api/search", searchAnswer.routes)   
 app.get("/",(req,res)=>{
     return res.status(200).send("Hello world")
 })
