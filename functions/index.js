@@ -10,11 +10,11 @@ admin.initializeApp({
 
 const doubtRoutes = require("./routes/doubt-route");
 const postAnswer = require("./routes/post_answer");
-
+const searchAnswer = require("./routes/search_route")
 
 const express = require("express")
 const cors = require("cors");
-const { searchAnswer } = require("./controllers/searchController");
+
 const app = express();
 
 app.use(express.json());
