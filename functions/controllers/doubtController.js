@@ -8,7 +8,7 @@ const addDoubt = async(req, res, next)=>{
     const {description,downVotes,heading, score,upVotes,userName} = req.body
     try {
         await db.collection('AllDoubts').doc().create({
-            description,downVotes,heading, score,upVotes,userName
+            description,downVotes,heading, score,upVotes,userName,count_answers:0
         });
         res.status(200).send("doubt saved successfully");
     } catch (error) {

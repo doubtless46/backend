@@ -13,6 +13,26 @@ const postAnswer = async(req, res, next)=>{
         subcollectionRef.add(req_body)
         .then((docRef) => {
             console.log('Document written with ID: ', docRef.id);
+            const collectionRef = db.collection('AllDoubts').doc(doubt_id);
+            collectionRef.get().then((doc) => {
+                if (doc.exists) {
+                  const counterValue = doc.data().count_answers;
+              
+                  const updatedValue = counterValue + 1;
+              
+                  // Update the counter field in the document
+                  collectionRef.update({ count_answers: updatedValue })
+                    .then(() => {
+                      console.log('Counter updated successfully!');
+                    })
+                    .catch((error) => {
+                      console.error('Error updating counter:', error);
+                    });
+                }
+            });
+
+              
+
         })
         .catch((error) => {
             console.error('Error adding document: ', error);
