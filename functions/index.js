@@ -17,7 +17,8 @@ admin.initializeApp({
 
 const doubtRoutes = require("./routes/doubt-route");
 const postAnswer = require("./routes/post_answer");
-// const redisRoute = require("./routes/redis-route");
+const searchAnswer = require("./routes/search_route")
+
 
 
 const express = require("express")
@@ -27,7 +28,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({origin:true}))
 app.use('/api', doubtRoutes.routes);
-// app.use('/api', redisRoute.routes);
+app.use("/api/search", searchAnswer.routes) 
 app.use("/api/doubts/answer",postAnswer.routes)  
 app.get("/",(req,res)=>{
     return res.status(200).send("Hello world")

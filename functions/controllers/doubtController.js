@@ -1,12 +1,10 @@
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
-const admin = require("firebase-admin");
 const db = getFirestore();
 const Redis = require("ioredis");
-const { log } = require("firebase-functions/logger");
 const client = new Redis({
-  host: "redis-14041.c228.us-central1-1.gce.cloud.redislabs.com",
-  port: 14041,
-  password: "1RrBA2zUGheO7bAgJnPPqrwk5VETgxgV",
+  host: "",
+  port: ,
+  password: "",
 });
 
 function isQuestion(sentence) {

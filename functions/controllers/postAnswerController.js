@@ -2,8 +2,6 @@
 const { getFirestore  } = require("firebase-admin/firestore");
 const db = getFirestore()
 
-
-
 const postAnswer = async(req, res, next)=>{
     const {doubt_id, answer,userName, userId,userPhoto} = req.body
     try {
