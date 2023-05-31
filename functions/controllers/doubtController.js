@@ -61,6 +61,7 @@ const addDoubt = async (req, res, next) => {
 
   if (isQuestion(description)) {
     try {
+
       // const doubtDoc = db.collection('AllDoubts').doc()
       const timestamp = Timestamp.now();
       const req_body = {
