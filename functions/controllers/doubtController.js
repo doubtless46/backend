@@ -61,8 +61,6 @@ const addDoubt = async (req, res, next) => {
 
   if (isQuestion(description)) {
     try {
-
-      // const doubtDoc = db.collection('AllDoubts').doc()
       const timestamp = Timestamp.now();
       const req_body = {
         author_Id,
@@ -88,7 +86,7 @@ const addDoubt = async (req, res, next) => {
       const lowerCaseKeywords = keywords.map((word) => word.toLowerCase());
 
       lowerCaseKeywords.forEach((jsonKey) => {
-        pipeline.exists(jsonKey); // Add the EXISTS command to check if the key exists
+        pipeline.exists(jsonKey); 
       });
 
       const existsResults = await pipeline.exec();
@@ -97,23 +95,23 @@ const addDoubt = async (req, res, next) => {
 
       existsResults.forEach((result, index) => {
         const jsonKey = lowerCaseKeywords[index];
-        const pathExist = result[1]; // Get the result of the EXISTS command
+        const pathExist = result[1]; 
         if (pathExist) {
           pipeline.call(
             "JSON.ARRAPPEND",
             jsonKey,
             "$",
             JSON.stringify(reqBody)
-          ); // Use JSON.ARRAPPEND for ARRAPPEND
+          ); 
         } else {
-          pipeline.call("JSON.SET", jsonKey, "$", JSON.stringify([reqBody])); // Use JSON.SET for SET
+          pipeline.call("JSON.SET", jsonKey, "$", JSON.stringify([reqBody])); 
         }
       });
 
       await pipeline.exec(); // Execute the pipeline
 
       res.status(200).send(JSON.stringify(reqBody));
-      client.quit();
+      // client.quit()              to run in your local system;
     } catch (error) {
       res.status(400).send(error.message);
       console.log(req.body);

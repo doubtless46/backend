@@ -4,7 +4,7 @@ const { searchAnswer} = require("../controllers/searchController");
 
 const router = express.Router();
 
-router.get('/search', searchAnswer);
+router.get('/', searchAnswer);
 
 module.exports = {
     routes : router

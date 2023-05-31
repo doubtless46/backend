@@ -4,7 +4,7 @@ const { addDoubt} = require("../controllers/doubtController");
 
 const router = express.Router();
 
-router.post('/doubts', addDoubt);
+router.post('/', addDoubt);
 
 module.exports = {
     routes : router

@@ -2,16 +2,13 @@ const Redis = require('ioredis');
 const redis = new Redis({
   host: "",
   port: ,
-  password: "",
+  password: " ",
 });
 
 const searchAnswer = async (req, res) => {
-  let queryArray = req.query.queryArray;
-
+  let queryArray = req.body;
   // Split the query string into an array of words and convert to lowercase
-  queryArray = queryArray.toLowerCase().split(' ');
-  // queryArray = queryArray.toString().split(',').map(query => query.trim(" "));
-  console.log(queryArray)
+  queryArray = queryArray.toLowerCase().split(` `);
 
   try {
     const pipeline = redis.pipeline();
@@ -21,12 +18,10 @@ const searchAnswer = async (req, res) => {
     });
 
     const existsResults = await pipeline.exec();
-
     const flattened = existsResults.flat(2).filter((value) => value !== null);
-    console.log(flattened)
     const values = await performJsonGets(flattened);
 
-    res.status(200).json(values.flat(2));
+    res.status(200).send(values.flat(2));
   } catch (error) {
     console.error('Error searching for data in Redis:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -41,7 +36,6 @@ async function performJsonGets(keys) {
   });
 
   const results = await pipeline.exec();
-  console.log(results)
 
   const values = results.map((result) => {
     if (result[1]) {
