@@ -1,5 +1,6 @@
 
-const { getFirestore  } = require("firebase-admin/firestore");
+
+const { firestore,getFirestore  } = require("firebase-admin/firestore");
 const db = getFirestore()
 
 
@@ -9,7 +10,7 @@ const postAnswer = async(req, res, next)=>{
     try {
         const parentDocRef = db.doc('AllDoubts/'+doubt_id);
         const subcollectionRef = parentDocRef.collection('Answer');
-        const req_body = { doubt_id, description,author_id, author_name,author_photo_url,author_college,netVotes: 0,createdOn : new Date().getTime()}
+        const req_body = { doubt_id, description,author_id, author_name,author_photo_url,author_college,netVotes: 0,createdOn : firestore.Timestamp.now()}
         subcollectionRef.add(req_body)
         .then((docRef) => {
             console.log('Document written with ID: ', docRef.id);
