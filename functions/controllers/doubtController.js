@@ -1,14 +1,16 @@
 const { getFirestore, Timestamp } = require("firebase-admin/firestore");
+const { v4: uuidv4 } = require('uuid');
+
 const db = getFirestore();
 const Redis = require("ioredis");
 const client = new Redis({
-  host: "",
-  port: ,
-  password: "",
+  host: "redis-12115.c301.ap-south-1-1.ec2.cloud.redislabs.com",
+  port: 12115,
+  password: "bUX3PispbyRDJ334G4fJGKNxgCe3Z9Ez",
 });
 
 function isQuestion(sentence) {
-  sentence = sentence.trim();
+  sentence = sentence.trim(" ");
   if (sentence.endsWith("?")) {
     return true;
   }
@@ -46,12 +48,14 @@ function isQuestion(sentence) {
   return false;
 }
 
+
 const addDoubt = async (req, res, next) => {
   const {
-    author_Id,
+    author_id,
     author_name,
     author_photo_url,
     author_college,
+    author_year,
     heading,
     description,
     net_votes,
@@ -61,64 +65,64 @@ const addDoubt = async (req, res, next) => {
 
   if (isQuestion(description)) {
     try {
-      // const doubtDoc = db.collection('AllDoubts').doc()
+      let myuuid = uuidv4();
       const timestamp = Timestamp.now();
       const req_body = {
-        author_Id,
+        doubt_id : myuuid,
+        author_id,
         author_name,
         author_photo_url,
         author_college,
+        author_year,
         heading,
         description,
         net_votes,
         tags,
         keywords,
         count_answers: 0,
-        createdOn: timestamp,
+        created_on: timestamp,
       };
 
-      const collectionRef = db.collection("AllDoubts");
-
-      const docRef = collectionRef.doc();
-      await docRef.set(req_body); // Add new doubt in the collection
+      const collectionRef=db.collection("AllDoubts");
+      console.log(collectionRef);
+      const docRef = collectionRef.doc(myuuid);
+      await docRef.set(req_body); 
 
       const pipeline = client.pipeline();
 
       const lowerCaseKeywords = keywords.map((word) => word.toLowerCase());
 
       lowerCaseKeywords.forEach((jsonKey) => {
-        pipeline.exists(jsonKey); // Add the EXISTS command to check if the key exists
+        pipeline.exists(jsonKey); 
       });
 
       const existsResults = await pipeline.exec();
-      const doubtID = { doubt_id: docRef.id };
-      const reqBody = { ...doubtID, ...req_body };
 
       existsResults.forEach((result, index) => {
         const jsonKey = lowerCaseKeywords[index];
-        const pathExist = result[1]; // Get the result of the EXISTS command
+        const pathExist = result[1]; 
         if (pathExist) {
           pipeline.call(
             "JSON.ARRAPPEND",
             jsonKey,
             "$",
-            JSON.stringify(reqBody)
-          ); // Use JSON.ARRAPPEND for ARRAPPEND
+            JSON.stringify(req_body)
+          ); 
         } else {
-          pipeline.call("JSON.SET", jsonKey, "$", JSON.stringify([reqBody])); // Use JSON.SET for SET
+          pipeline.call("JSON.SET", jsonKey, "$", JSON.stringify([req_body])); 
         }
       });
 
-      await pipeline.exec(); // Execute the pipeline
+      await pipeline.exec(); 
 
-      res.status(200).send(JSON.stringify(reqBody));
-      client.quit();
+      res.status(200).send(JSON.stringify(req_body));
     } catch (error) {
       res.status(400).send(error.message);
       console.log(req.body);
     }
+
   } else {
-    res.send({ message: "ASK QUESTIONS ONLY" });
+    res.status(400).send({ message: "ASK QUESTIONS ONLY" });
   }
 };
 
