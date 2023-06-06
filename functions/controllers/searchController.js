@@ -6,9 +6,11 @@ const redis = new Redis({
 });
 
 const searchAnswer = async (req, res) => {
-  let queryArray = req.body;
+  let queryArray = req.body
+  const length = queryArray.length; // (1,length-1)  gives output end"
+  queryArray = queryArray.substring(1,length-1); //we have to trim out the quotes also but dont know the reason
   // Split the query string into an array of words and convert to lowercase
-  queryArray = queryArray.toLowerCase().split(` `);
+  queryArray = queryArray.toLowerCase().trim(" ").split(` `)
 
   try {
     const pipeline = redis.pipeline();
