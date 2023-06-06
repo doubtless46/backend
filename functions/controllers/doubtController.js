@@ -60,10 +60,10 @@ const addDoubt = async (req, res, next) => {
     description,
     net_votes,
     tags,
-    keywords,
+    keywords
   } = req.body;
 
-  if (isQuestion(description)) {
+  if (isQuestion(heading)) {
     try {
       let myuuid = uuidv4();
       const timestamp = Timestamp.now();
@@ -84,7 +84,7 @@ const addDoubt = async (req, res, next) => {
       };
 
       const collectionRef=db.collection("AllDoubts");
-      console.log(collectionRef);
+      // console.log(collectionRef);
       const docRef = collectionRef.doc(myuuid);
       await docRef.set(req_body); 
 

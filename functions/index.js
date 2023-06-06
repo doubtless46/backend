@@ -4,10 +4,10 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
 
-const serviceAccount =  require("./doubtless-bd798-firebase-adminsdk-5sxx2-18b56b565c.json");
+const serviceAccount =  require("admin sdk file path");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://doubtless-bd798.firebaseio.com'   
+  databaseURL: ''   
 });
 
 

@@ -7,9 +7,10 @@ const redis = new Redis({
 
 const searchAnswer = async (req, res) => {
   let queryArray = req.body;
+  const length = queryArray.length; // (1,length-1)  gives output end"
+  queryArray = queryArray.substring(1,length-1); //we have to trim out the quotes also but dont know the reason
   // Split the query string into an array of words and convert to lowercase
-  queryArray =  JSON.stringify(queryArray.toLowerCase().trim(" ")).split(` `);
-  console.log(queryArray)
+  queryArray = queryArray.toLowerCase().trim(" ").split(` `)
 
   try {
     const pipeline = redis.pipeline();
@@ -19,7 +20,6 @@ const searchAnswer = async (req, res) => {
     });
 
     const existsResults = await pipeline.exec();
-    console.log(existsResults);
     const flattened = existsResults.flat(2).filter((value) => value !== null);
     const values = await performJsonGets(flattened);
 
@@ -38,7 +38,6 @@ async function performJsonGets(keys) {
   });
 
   const results = await pipeline.exec();
-  console.log(results)
 
   const values = results.map((result) => {
     if (result[1]) {
