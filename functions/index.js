@@ -4,7 +4,7 @@ const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
 
-const serviceAccount =  require("add the path of the admin SDK credentials file");
+const serviceAccount =  require("./adminSDK.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
