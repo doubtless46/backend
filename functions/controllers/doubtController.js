@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const db = getFirestore();
 const Redis = require("ioredis");
+
 const client = new Redis({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_PORT,

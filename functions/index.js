@@ -4,11 +4,17 @@ const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
 
-const serviceAccount =  require("add the path of the admin SDK credentials file");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.DATABASE_URL,
+  // credential: admin.credential.cert(serviceAccount),
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASURMENT_ID,
+  databaseURL: process.env.FIREBASE_DB_URL 
 });
 
 const doubtRoutes = require("./routes/doubt-route");
