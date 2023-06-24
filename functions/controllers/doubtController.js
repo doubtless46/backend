@@ -9,46 +9,6 @@ const client = new Redis({
   password: process.env.REDIS_PASSWORD,
 });
 
-function isQuestion(sentence) {
-  sentence = sentence.trim(" ");
-  if (sentence.endsWith("?")) {
-    return true;
-  }
-  const questionWords = [
-    "who",
-    "what",
-    "when",
-    "where",
-    "why",
-    "which",
-    "how",
-    "is",
-    "are",
-    "do",
-    "does",
-    "did",
-    "can",
-    "could",
-    "should",
-    "would",
-    "will",
-    "won't",
-    "kya",
-    "kyu",
-    "kaise",
-  ];
-  const words = sentence.split(' ');
-  for (const word of words) {
-    const lowercaseWord = word.toLowerCase();
-    if (questionWords.includes(lowercaseWord)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
 const addDoubt = async (req, res, next) => {
   const {
     author_id,
@@ -63,17 +23,13 @@ const addDoubt = async (req, res, next) => {
     keywords,
   } = req.body;
 
-  if (heading && !isQuestion(heading)) {
-    return res.status(400).send({ message: "ASK QUESTIONS ONLY" });
-  }
-
-  if(keywords && keywords.length===0){
+  if(!keywords || keywords.length===0){
     return res.status(400).send({message:"ENTER KEYWORDS"});
   }
 
   try {
     let myuuid = uuidv4();
-    const timestamp = Timestamp.now();
+    const timestamp = Timestamp.now().toDate();
     const req_body = {
       doubt_id: myuuid,
       author_id,
