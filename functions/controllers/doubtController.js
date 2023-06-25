@@ -114,7 +114,6 @@ const addDoubt = async (req, res, next) => {
       });
 
       await pipeline.exec(); 
-
       res.status(200).send(JSON.stringify(req_body));
     } catch (error) {
       res.status(400).send(error.message);
