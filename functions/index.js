@@ -4,10 +4,10 @@ const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
 
-const serviceAccount =  require("../functions/doubtless-56011-firebase-adminsdk-6mlpn-8ba7c16ed3.json");
+const serviceAccount =  require("add the path of the admin SDK credentials file");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://doubtless-56011.firebaseio.com'   
+  databaseURL: 'https://projectname.firebaseio.com'   
 });
 
 

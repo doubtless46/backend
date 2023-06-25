@@ -62,7 +62,9 @@ const postAnswer = async (req, res, next) => {
                 answer_author_name: author_name,
                 answer_id: myuuid,
                 author_photo_url: author_photo_url,
-                created_on: Timestamp.now(),
+                type:"postAnswer",
+                is_read: false,
+                created_on: Timestamp.now()
               })
               .then(() => {
                 console.log("notification done");
