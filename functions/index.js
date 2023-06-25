@@ -1,13 +1,13 @@
 
-const functions = require("firebase-functions");
-// const { onRequest } = require("firebase-functions/v2/https");
+// const functions = require("firebase-functions");
+const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require('body-parser');
 
-const serviceAccount =  require("admin sdk file path");
+const serviceAccount =  require("../functions/doubtless-56011-firebase-adminsdk-6mlpn-8ba7c16ed3.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: ''   
+  databaseURL: 'https://doubtless-56011.firebaseio.com'   
 });
 
 
@@ -33,6 +33,7 @@ app.get("/",(req,res)=>{
 })
 
 
-exports.doubtless = functions.region("asia-south1").https.onRequest(app);
+// exports.doubtless = functions.region("asia-south1").https.onRequest(app);
+exports.doubtless = onRequest(app);
 
 

@@ -4,9 +4,9 @@ const { v4: uuidv4 } = require('uuid');
 const db = getFirestore();
 const Redis = require("ioredis");
 const client = new Redis({
-  host: "",
-  port: ,
-  password: "",
+  host: "redis-14041.c228.us-central1-1.gce.cloud.redislabs.com",
+  port: 14041,
+  password: "1RrBA2zUGheO7bAgJnPPqrwk5VETgxgV",
 });
 
 function isQuestion(sentence) {
