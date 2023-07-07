@@ -1,3 +1,4 @@
+
 {
   "functions": [
     {
@@ -11,22 +12,11 @@
       ]
     }
   ],
-  "emulators": {
-    "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5001
-    },
-    "firestore": {
-      "port": 8081
-    },
-    "pubsub": {
-      "port": 8085
-    },
-    "ui": {
-      "enabled": true
-    },
-    "singleProjectMode": false
-  }
+  "runtime": "nodejs14",
+    "triggers": [
+      {
+        "name": "myFunction",
+        "type": "http"
+      }
+    ]
 }
