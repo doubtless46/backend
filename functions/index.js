@@ -9,7 +9,7 @@ const serviceAccount =  require("./adminSDK.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: process.env.DATABASE_URL,
-  storageBucket: 'gs://doubtless-7f40d.appspot.com'
+  storageBucket: process.env.FIREBASE_BUCKET
 });
 
 
@@ -40,7 +40,7 @@ app.use(bodyParser.text());
 app.use("/api/doubts", doubtRoutes.routes);
 app.use("/api/search", searchAnswer.routes);
 app.use("/api/doubts/answer", postAnswer.routes);
-app.use('/api/upload',profileUpload.routes)
+app.use('/api/uploadUserProfileImage',profileUpload.routes)
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to Doubtless");
 });

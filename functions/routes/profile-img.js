@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { uploadController } = require("../controllers/profileImg");
+const { uploadController } = require("../controllers/profileImgController");
 
 const router = express.Router();
 const upload = multer({
@@ -18,14 +18,14 @@ const upload = multer({
 });
 
 const multerMiddleware = (req, res, next) => {
-  upload.single("name")(req, res, (err) => {
+  upload.single("file")(req, res, (err) => {
     if (err) 
       return res.status(400).send({ message: err.message });
     next();
   });
 };
 
-router.post("/", multerMiddleware, uploadController);
+router.patch("/", multerMiddleware, uploadController);
 
 module.exports = {
   routes: router,
