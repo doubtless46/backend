@@ -19,7 +19,10 @@ const upload = multer({
 
 const multerMiddleware = (req, res, next) => {
   upload.single("file")(req, res, (err) => {
-    if (err) 
+    if(err && err.code==='LIMIT_FILE_SIZE'){
+      return res.status(400).send({ message: "File Larger than 600KB" });
+    }
+    else if (err) 
       return res.status(400).send({ message: err.message });
     next();
   });
