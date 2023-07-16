@@ -4,7 +4,6 @@ const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
 
-
 const serviceAccount =  require("./adminSDK.json");
 
 admin.initializeApp({
@@ -33,9 +32,7 @@ app.use('/api/uploadUserProfileImage',profileUpload.routes)
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to Doubtless");
 });
-app.listen(process.env.PORT || 5000, () =>
-  console.log(`Server Started at ${process.env.PORT}`)
-);
+
 
 //exports.doubtless = functions.region("asia-south1").https.onRequest(app); // use for deploying funtions
 
