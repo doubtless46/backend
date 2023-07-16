@@ -1,4 +1,3 @@
-
 {
   "functions": [
     {
@@ -13,10 +12,10 @@
     }
   ],
   "runtime": "nodejs14",
-    "triggers": [
-      {
-        "name": "myFunction",
-        "type": "http"
-      }
-    ]
+  "triggers": [
+    {
+      "name": "myFunction",
+      "type": "http"
+    }
+  ]
 }
