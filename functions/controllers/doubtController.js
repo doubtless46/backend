@@ -22,6 +22,7 @@ const addDoubt = async (req, res, next) => {
     net_votes,
     tags,
     keywords,
+    xp_count,
     is_anonymous
   } = req.body;
 
@@ -46,6 +47,7 @@ const addDoubt = async (req, res, next) => {
       keywords,
       count_answers: 0,
       created_on: timestamp,
+      xp_count,
       is_anonymous:is_anonymous || false
     };
 
