@@ -11,7 +11,8 @@ const postAnswer = async (req, res, next) => {
     author_photo_url,
     author_year,
     author_college,
-    isAnonymous
+    is_anonymous,
+    xp_count
   } = req.body;
   try {
     let myuuid = uuidv4();
@@ -29,7 +30,8 @@ const postAnswer = async (req, res, next) => {
       author_college,
       net_votes: 0,
       created_on: Timestamp.now(),
-      isAnonymous
+      xp_count,
+      is_anonymous:is_anonymous||false
     };
     subcollectionRef
       .doc(myuuid)
@@ -89,4 +91,3 @@ const postAnswer = async (req, res, next) => {
 };
 
 module.exports = { postAnswer };
-

@@ -3,8 +3,8 @@ const functions = require("firebase-functions");
 const { onRequest } = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
+const serviceAccount = require("./admin-production.json");
 
-const serviceAccount =  require("./adminSDK.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,7 +33,6 @@ app.get("/", (req, res) => {
   return res.status(200).send("Welcome to Doubtless");
 });
 
+exports.doubtless = functions.region("asia-south1").https.onRequest(app); // use for deploying funtions
 
-//exports.doubtless = functions.region("asia-south1").https.onRequest(app); // use for deploying funtions
-
-exports.doubtless = onRequest(app); // use for local testing
+// exports.doubtless = onRequest(app); // use for local testing

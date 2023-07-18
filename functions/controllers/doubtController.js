@@ -22,7 +22,8 @@ const addDoubt = async (req, res, next) => {
     net_votes,
     tags,
     keywords,
-    isAnonymous
+    xp_count,
+    is_anonymous
   } = req.body;
 
   if(!keywords || keywords.length===0){
@@ -46,7 +47,8 @@ const addDoubt = async (req, res, next) => {
       keywords,
       count_answers: 0,
       created_on: timestamp,
-      isAnonymous
+      xp_count,
+      is_anonymous:is_anonymous || false
     };
 
     const collectionRef = db.collection("AllDoubts");
