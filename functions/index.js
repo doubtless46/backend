@@ -25,6 +25,7 @@ admin.initializeApp({
 const doubtRoutes = require("./routes/doubt-route");
 const postAnswer = require("./routes/post_answer");
 const searchAnswer = require("./routes/search_route");
+const topBanner = require("./routes/top-banner");
 
 const express = require("express");
 const cors = require("cors");
@@ -36,6 +37,8 @@ app.use(bodyParser.text());
 app.use("/api/doubts", doubtRoutes.routes);
 app.use("/api/search", searchAnswer.routes);
 app.use("/api/doubts/answer", postAnswer.routes);
+app.use("/api/banner",topBanner.routes);
+
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to Doubtless");
 });
