@@ -1,7 +1,8 @@
 {
   "projects": {
-    "default": "doubtless-bd798",
-    "staging": "doubtless-bd798"
+    "default": "doubtlesstest",
+    "staging": "doubtless-bd798",
+    "y": "doubtlesstest"
   },
   "targets": {},
   "etags": {}
