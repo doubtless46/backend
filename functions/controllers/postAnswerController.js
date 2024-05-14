@@ -11,6 +11,8 @@ const postAnswer = async (req, res, next) => {
     author_photo_url,
     author_year,
     author_college,
+    is_anonymous,
+    xp_count
   } = req.body;
   try {
     let myuuid = uuidv4();
@@ -28,6 +30,8 @@ const postAnswer = async (req, res, next) => {
       author_college,
       net_votes: 0,
       created_on: Timestamp.now(),
+      xp_count,
+      is_anonymous:is_anonymous||false
     };
     subcollectionRef
       .doc(myuuid)
@@ -35,10 +39,12 @@ const postAnswer = async (req, res, next) => {
       .then((docRef) => {
         console.log("Document written with ID: ", myuuid);
         const collectionRef = db.collection("AllDoubts").doc(doubt_id);
+        const notcollectionRef = db.collection("notifications");
         collectionRef.get().then((doc) => {
           if (doc.exists) {
             const counterValue = doc.data().count_answers;
-
+            const doubt_heading = doc.data().heading;
+            const doubt_author_id = doc.data().author_id;
             const updatedValue = counterValue + 1;
 
             // Update the counter field in the document
@@ -49,6 +55,26 @@ const postAnswer = async (req, res, next) => {
               })
               .catch((error) => {
                 console.error("Error updating counter:", error);
+              });
+
+            notcollectionRef.add({
+                doubt_id: doubt_id,
+                doubt_heading: doubt_heading,
+                answer_description: description,
+                doubt_author_id: doubt_author_id,
+                answer_author_id: author_id,
+                answer_author_name: author_name,
+                answer_id: myuuid,
+                author_photo_url: author_photo_url,
+                type:"postAnswer",
+                is_read: false,
+                created_on: Timestamp.now()
+              })
+              .then(() => {
+                console.log("notification done");
+              })
+              .catch((error) => {
+                console.log(error);
               });
           }
         });
@@ -65,4 +91,3 @@ const postAnswer = async (req, res, next) => {
 };
 
 module.exports = { postAnswer };
-
